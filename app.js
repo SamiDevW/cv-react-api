@@ -1,16 +1,17 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+const cors = require('cors')
 const contactRoute = require('./routes/contactRoute')
 const competenceRoute = require('./routes/competenceRoute')
 const langueRoute = require('./routes/langueRoute')
 const interetsRoute = require('./routes/interetsRoute')
 const experienceRoute = require('./routes/experienceRoute')
 const trainingRoute = require('./routes/trainingRoute')
-const cors = require('cors')
+const introRoute = require('./routes/introductionRoute')
+
 
 require('dotenv').config()
-console.log(process.env.PORT);
 const PORT = process.env.PORT;
 
 
@@ -38,4 +39,4 @@ app.use('', langueRoute)
 app.use('', interetsRoute)
 app.use('', experienceRoute)
 app.use('', trainingRoute)
-
+app.use('', introRoute)
