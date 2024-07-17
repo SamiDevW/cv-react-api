@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const competenceModel = require('../models/comptenceModel')
+const { log } = require('console')
 
 router.get('/competence', async (req, res) => {
     const comptences = await competenceModel.find()
@@ -17,5 +18,22 @@ router.delete('/competence/:id', async (req, res) => {
     const competence = await competenceModel.findById(id)
     await competenceModel.findByIdAndDelete(id)
     res.json({ message: `la comptence ${competence.skill} a été supprimée` })
+})
+router.put('/competence/:id', async (req, res) => {
+    try {
+        const { id } = req.params
+        const competence = req.body
+        console.log(competence);
+        const updCompetence = await competenceModel.findByIdAndUpdate(id, competence)
+        if (!updCompetence) {
+            return res.status(400).json({ message: `Can't find the user info with the id ${id}` })
+        }
+        res.status(200).json(updCompetence)
+    } catch (error) {
+        res.status(500).json({
+            message: error.message
+        })
+        console.log(error);
+    }
 })
 module.exports = router;
