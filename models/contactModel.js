@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const contactSchema = new mongoose.Schema({
-    nom: String,
-    prenom: String,
+    lastname: String,
+    firstname: String,
     email: String,
     tel: String,
-    adresse: String,
+    adress: String,
     status: String
 })
 // const contactModel = mongoose.models.Contact || mongoose.model('Contact', contactSchema);

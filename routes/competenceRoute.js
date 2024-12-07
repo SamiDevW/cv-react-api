@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const competenceModel = require('../models/comptenceModel')
-const { log } = require('console')
+
 
 router.get('/competence', async (req, res) => {
     const comptences = await competenceModel.find()
@@ -19,7 +19,14 @@ router.delete('/competence/:id', async (req, res) => {
     await competenceModel.findByIdAndDelete(id)
     res.json({ message: `la comptence ${competence.skill} a été supprimée` })
 })
-router.put('/competence/:id', async (req, res) => {
+router.get('/competence/:id', async function (req, res) {
+    const { id } = req.params
+    const oldCompetence = await competenceModel.findById(id)
+    res.json(oldCompetence)
+
+
+})
+router.patch('/competence/:id', async (req, res) => {
     try {
         const { id } = req.params
         const competence = req.body
