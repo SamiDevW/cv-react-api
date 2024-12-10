@@ -11,6 +11,6 @@ router.post('/contact', catchAsync(async (req, res) => {
     const newContact = req.body;
     await contactModel.deleteOne();
     await contactModel.create(newContact);
-    res.json(newContact);
+    res.json({ message: 'Contacts updated' });
 }))
 module.exports = router;

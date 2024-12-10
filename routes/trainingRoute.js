@@ -1,6 +1,5 @@
 const express = require('express')
 const trainingModel = require('../models/trainingModel')
-const { findById } = require('../models/experienceModel')
 const router = express.Router()
 
 router.get('/training', async (req, res) => {
@@ -12,10 +11,10 @@ router.get('/training', async (req, res) => {
     }
 })
 
-router.post('/training', (req, res) => {
+router.post('/training', async (req, res) => {
     try {
-        const training = req.body
-        const trainings = trainingModel.create(training)
+        const training = await new trainingModel(req.body)
+        await training.save()
         res.status(200).json({
             message: `A training has been added with the establishment ${training.establishment}`
         })
