@@ -1,7 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
+const ExpressError = require('./utils/ExpressError.js')
 // SESSION and PASSPORT
 const session = require('express-session')
 const passport = require('passport')
@@ -18,7 +20,8 @@ const trainingRoute = require('./routes/trainingRoute')
 const userRoute = require('./routes/userRoute')
 //
 const userModel = require('./models/userModel.js');
-require('dotenv').config()
+//
+
 const PORT = process.env.PORT;
 mongoose.connect(process.env.DB)
     .then(() => {
@@ -56,8 +59,16 @@ app.use('', languagesRoute)
 app.use('', interetsRoute)
 app.use('', experienceRoute)
 app.use('', trainingRoute)
+app.all('*', (req, res, next) => {
+    // res.send('404')
+    next(new ExpressError('Page Not Found', 404))
+})
+app.use((err, req, res, next) => {
+    const { statusCode = 500 } = err;
+    if (!err.message) err.message = 'Oh No, something went wrong!'
+    res.status(statusCode).render('error', { err })
 
-
+})
 app.listen(PORT, () => {
     console.log(`Server running Ok on port http://localhost:${PORT}`);
 })
