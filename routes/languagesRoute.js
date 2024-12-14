@@ -4,7 +4,6 @@ const catchAsync = require('../utils/catchAsync')
 const languagesModel = require('../models/languagesModel')
 router.get('/langues', async (req, res) => {
     const langues = await languagesModel.find()
-    console.log(langues);
     res.json(langues)
 })
 router.post('/langues', catchAsync(async (req, res) => {
